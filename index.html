@@ -5,8 +5,20 @@
 		<title>Editathon Leaderboard</title>
 		<script src="lib/core.js"></script>
 		<script>
+			MyModule.prototype=new eldb.Module();
+			MyModule.prototype.constructor=MyModule;
+			function MyModule() {
+				this.onDataUpdated=function(users) {
+					console.log("I just received some data!");
+					console.log(users);
+				}
+			}
+
 			var editathon=new eldb.Editathon(true);
-			editathon.setLanguages("en");
+			editathon.setLanguage("en");
+
+			var module=new MyModule();
+			module.setEditathon(editathon);
 		</script>
 	</head>
 	<body>
