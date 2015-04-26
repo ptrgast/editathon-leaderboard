@@ -3,96 +3,19 @@
 	<head>
 		<meta charset='utf-8'>
 		<title>Editathon</title>
-		<style>
-			body {padding:5%}
-			.label {
-				text-align: center;
-				color: #888;
-				font-size: 0.3em;		
-			}
-			.total-contributions {
-				text-align: center;
-				font-size: 14em;		
-			}
-			.total-contributors {
-				padding-top: 2%;
-				text-align: center;
-				font-size: 7em;
-				color: #888;	
-			}
-			.editathon-duration {
-				text-align: center;
-				font-style: italic;
-				font-size: 1.5em;
-				color: #aaa;
-				margin-top: 2%;
-			}
-			.separator {
-				margin: auto;
-				width: 30%;
-				height: 1px;
-				border-bottom: 1px dotted #aaa;		
-			}
-			#main-controls {
-				position: fixed;
-				bottom: 0px;
-				right: 0px;
-				padding: 10px;
-			}
-			#page-controls {
-				position: fixed;
-				bottom: 0px;
-				left: 0px;
-				padding: 10px;
-			}
-			.dialog {
-				display: none;			
-			}
-			#users {
-				margin-top: 5%;
-			}
-			#articles .title, #users .title {
-				font-size: 1.5em;
-			}
-			#articles a, #users a {
-				display: block;			
-			}
-			#articles .content, #users .content {
-				-webkit-column-count: 4; /* CH, SF, OP */
-				-moz-column-count: 4; /* FF */
-				column-count: 4;
-			}
-			#page2 {
-				display: none;
-			}
-		</style>
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<link rel="stylesheet" href="3rdparty/jquery-ui/jquery-ui.css"/>
 		<script src="3rdparty/jquery-ui/external/jquery/jquery.js"></script>
 		<script src="3rdparty/jquery-ui/jquery-ui.min.js"></script>
 		<script src="lib/core.js"></script>
 		<script src="modules/module-total.js"></script>
+		<script src="modules/module-details.js"></script>
 		<script>
-			MyModule.prototype=new eldb.Module();
-			MyModule.prototype.constructor=MyModule;
-			function MyModule() {
-				this.onDataUpdated=function(users) {
-					var articleLinks="";
-					for(var i=0;i<users.length;i++) {
-						var currentUser=users[i];
-						for(var j=0;j<currentUser.articles.length;j++) {
-							articleLinks+="<a href='"+currentUser.articles[j].link+"' target='_blank'>"+currentUser.articles[j].title+"</a> ";
-						}
-					}
-					$("#articles .content").html(articleLinks);
-					updateUsersView();
-				}
-			}
-
 			var editathon=new eldb.Editathon(true);
 			editathon.setLanguage("el");
 
-			var module=new MyModule();
-			module.setEditathon(editathon);
+			var moduleDetails=new ModuleDetails();
+			moduleDetails.setEditathon(editathon);
 
 			var moduleTotal=new ModuleTotal();
 			moduleTotal.setEditathon(editathon);
@@ -117,7 +40,8 @@
 			}
 
 			window.onload=function() {
-				var tmp=$("#page1").append(moduleTotal._container);
+				$("#page1").append(moduleTotal._container);
+				$("#page2").append(moduleDetails._container);
 
 				$("#button-startstop").button();
 				$("#button-startstop").click(function(event) {
@@ -182,16 +106,6 @@
 		<div id="page1">
 		</div>
 		<div id="page2">
-			<!-- articles -->
-			<div id="articles">
-				<div class="title">Articles</div>
-				<div class="content"></div>
-			</div>
-			<!-- users -->
-			<div id="users">
-				<div class="title">Contributors</div>
-				<div id="all-contributors" class="content"></div>
-			</div>
 		</div>
 		<!-- controls -->
 		<div id="main-controls">
