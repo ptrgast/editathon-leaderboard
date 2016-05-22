@@ -2,17 +2,17 @@ body {padding:5%}
 .label {
 	text-align: center;
 	color: #888;
-	font-size: 0.3em;		
+	font-size: 0.3em;
 }
 .total-contributions {
 	text-align: center;
-	font-size: 14em;		
+	font-size: 14em;
 }
 .total-contributors {
 	padding-top: 2%;
 	text-align: center;
 	font-size: 7em;
-	color: #888;	
+	color: #888;
 }
 .editathon-duration {
 	text-align: center;
@@ -21,11 +21,34 @@ body {padding:5%}
 	color: #aaa;
 	margin-top: 2%;
 }
+.editathon-status {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	font-size: 2em;
+}
+.editathon-status div {
+	padding: 5px;
+}
+.editathon-status .started {
+	/*color: #6d5;*/
+	animation: blink 2s infinite;
+}
+@keyframes blink {
+	0% {opacity: 0;}
+	5% {opacity: 1;}
+	75% {opacity: 0;}
+	100% {opacity: 0;}
+}
+.editathon-status .ended {
+	background-color: #d65;
+	color: #fff;
+}
 .separator {
 	margin: auto;
 	width: 30%;
 	height: 1px;
-	border-bottom: 1px dotted #aaa;		
+	border-bottom: 1px dotted #aaa;
 }
 #main-controls {
 	position: fixed;
@@ -40,7 +63,7 @@ body {padding:5%}
 	padding: 10px;
 }
 .dialog {
-	display: none;			
+	display: none;
 }
 .users {
 	margin-top: 5%;
@@ -49,7 +72,7 @@ body {padding:5%}
 	font-size: 1.5em;
 }
 .articles a, .users a {
-	display: block;			
+	display: block;
 }
 .articles .content, .users .content {
 	-webkit-column-count: 4; /* CH, SF, OP */
@@ -58,4 +81,13 @@ body {padding:5%}
 }
 #page2 {
 	display: none;
+}
+.options-section {
+	padding: 1em 0;
+}
+.options-section:nth-of-type(n+2) {
+	border-top: 1px dotted #cccccc;
+}
+.options-section .title {
+	font-weight: bold;
 }

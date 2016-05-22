@@ -12,7 +12,7 @@ function ModuleDetails() {
 	this._articlesContent.className="content";
 	this._articlesContainer.appendChild(this._articlesTitle);
 	this._articlesContainer.appendChild(this._articlesContent);
-	
+
 	//users
 	this._usersContainer=document.createElement("div");
 	this._usersContainer.className="users";
@@ -26,18 +26,18 @@ function ModuleDetails() {
 
 	this._container.appendChild(this._articlesContainer);
 	this._container.appendChild(this._usersContainer);
-	
+
 	this._updateUsersView=function() {
 		var users=editathon.getUsers();
-		//all			
-		users=users.sort(sortByArticles);	
+		//all
+		users=users.sort(this._sortByArticles);	
 		var allUsers="";
 		for(var i=0;i<users.length;i++) {
-			allUsers+="<a>"+(i+1)+". "+users[i].username+"</a> ";		
+			allUsers+="<a>"+(i+1)+". "+users[i].username+"</a> ";
 		}
 		this._usersContent.innerHTML=allUsers;
 	}
-	
+
 	this._sortByArticles=function(a, b) {
 		var aTotal=a.articles.length;
 		var bTotal=b.articles.length;
@@ -45,7 +45,7 @@ function ModuleDetails() {
 		else if(aTotal<bTotal) {return 1;}
 		else {return 0;}
 	}
-	
+
 	this.onDataUpdated=function(users) {
 		var articleLinks="";
 		for(var i=0;i<users.length;i++) {
