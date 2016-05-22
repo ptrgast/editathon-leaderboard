@@ -38,10 +38,17 @@ function ModuleTotal() {
 	this._durationValue.innerHTML="00:00 hours!";
 	this._durationContainer.appendChild(this._durationValue);
 
+	//system status
+	this._statusContainer=document.createElement("div");
+	this._statusContainer.className="editathon-status";
+	this._statusValue=document.createElement("div");
+	this._statusContainer.appendChild(this._statusValue);
+
 	this._container.appendChild(this._contributionsContainer);
 	this._container.appendChild(this._separator1);
 	this._container.appendChild(this._contributorsContainer);
 	this._container.appendChild(this._durationContainer);
+	this._container.appendChild(this._statusContainer);
 
 	var thisobj=this;
 
@@ -70,7 +77,16 @@ function ModuleTotal() {
 		}
 		this._contributionsValue.innerHTML=total;
 		this._contributorsValue.innerHTML=users.length;
-		//this._updateEditathonDuration();
+		if(this._editathon._status==this._editathon._STOPPED) {
+			this._statusValue.innerHTML = "";
+			this._statusValue.className = "stopped";
+		} else if(this._editathon._status==this._editathon._STARTED) {
+			this._statusValue.innerHTML = "&bullet;";
+			this._statusValue.className = "started";
+		} else if(this._editathon._status==this._editathon._ENDED) {
+			this._statusValue.innerHTML = "ENDED";
+			this._statusValue.className = "ended";
+		}
 	}
 
 }
