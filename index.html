@@ -20,6 +20,9 @@
 			var moduleTotal=new ModuleTotal();
 			moduleTotal.setEditathon(editathon);
 
+			var carouselTime=10000;
+			var carouselTimer=null;
+
 			window.onload=function() {
 				$("#page1").append(moduleTotal._container);
 				$("#page2").append(moduleDetails._container);
@@ -62,6 +65,25 @@
 				$("#button-reset").click(function(event) {
 					if(confirm("This will clear all your data permanently! Are you sure?")) {
 						editathon.reset();
+					}
+				});
+
+				$("#button-carousel").button();
+				$("#button-carousel").click(function(event) {
+					var toggle=$("#button-carousel");
+					if(toggle.is(":checked")) {
+						toggle.button("option","label","On");
+						if(carouselTimer!=null) {
+							clearInterval(carouselTimer);
+							carouselTimer=null;
+						}
+						carouselTimer=setInterval(_showNextPage, carouselTime);
+					} else {
+						toggle.button("option","label","Off");
+						if(carouselTimer!=null) {
+							clearInterval(carouselTimer);
+							carouselTimer=null;
+						}
 					}
 				});
 
@@ -111,15 +133,48 @@
 					$("#page1").fadeOut('fast',function(){$("#page2").fadeIn('fast')});
 				});
 			}
+
+			function _showPage(index) {
+				var pages=$(".page");
+				var currentPageIndex=null;
+				//find the current visible page
+				for(var i=0;i<pages.length;i++) {
+					if($(pages[i]).is(":visible")) {
+						currentPageIndex=i;
+						break;
+					}
+				}
+				//if index is not provided then go to the next page
+				if(index==null) {
+					index=currentPageIndex+1;
+					if(index>pages.length-1) {index=0;}
+				}
+				//switch pages
+				if(currentPageIndex==null) {
+					$(pages[index]).fadeIn('fast');
+				} else {
+					$(pages[currentPageIndex]).fadeOut(
+						'fast',
+						function() {$(pages[index]).fadeIn('fast');}
+					);
+				}
+				//change the selected radio
+				$("#radio-page"+(index+1)).prop("checked", true);
+				$("#buttonset-pages").buttonset('refresh');
+			}
+
+			function _showNextPage() {
+				_showPage();
+			}
 		</script>
 	</head>
 	<body>
-		<div id="page1">
-		</div>
-		<div id="page2">
-		</div>
+
+		<div id="page1" class="page"></div>
+		<div id="page2" class="page"></div>
 
 		<!-- controls -->
+
 		<div id="main-controls">
 			<button id="button-setup">Setup</button>
 		</div>
@@ -131,6 +186,7 @@
 		</div>
 
 		<!-- dialogs -->
+
 		<div id="dialog-setup" class="dialog" title="Setup">
 			<div class="options-section">
 				<div class="title">Main Controls</div>
@@ -143,15 +199,22 @@
 				<button id="button-remove-contributor">- Remove</button>
 			</div>
 			<div class="options-section">
+				<div class="title">Cycle through views</div>
+				<input type="checkbox" id="button-carousel"/><label for="button-carousel">Off</label>
+			</div>
+			<div class="options-section">
 				<div class="title">Start a new editathon</div>
 				<button id="button-reset">Reset</button>
 			</div>
 		</div>
+
 		<div id="dialog-add-contributor" class="dialog" title="Add Contributor">
 			<p>Username: <input id="input-add-contributor" type="text"/></p>
 		</div>
+
 		<div id="dialog-remove-contributor" class="dialog" title="Remove Contributor">
 			<p>Username: <input id="input-remove-contributor" type="text"/></p>
 		</div>
+
 	</body>
 </html>
