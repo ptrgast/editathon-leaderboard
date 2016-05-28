@@ -12,7 +12,7 @@
 		<script src="modules/module-details.js"></script>
 		<script>
 			var editathon=new eldb.Editathon(true);
-			editathon.setLanguage("el");
+			editathon.setLanguages(["en","el"]);
 
 			var moduleDetails=new ModuleDetails();
 			moduleDetails.setEditathon(editathon);
@@ -121,9 +121,6 @@
 
 		<!-- controls -->
 		<div id="main-controls">
-			<!-- <button id="button-startstop">Start</button>
-			<button id="button-add-contributor">+ Contributor</button>
-			<button id="button-remove-contributor">- Contributor</button> -->
 			<button id="button-setup">Setup</button>
 		</div>
 		<div id="page-controls">
