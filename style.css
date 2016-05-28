@@ -79,6 +79,24 @@ body {padding:5%}
 	-moz-column-count: 4; /* FF */
 	column-count: 4;
 }
+.users a {
+	padding: 0.3em;
+}
+.users a .edits-counter {
+	position: relative;
+	display: inline-block;
+	padding: 0.1em 0.3em;
+	top: -0.2em;
+	right: 0px;
+	font-family: sans-serif;
+	font-size: 0.7em;
+	background-color: #ccc;
+	color: #fff;
+	border-radius: 2px;
+}
+.users a .edits-counter.has-edits {
+	background-color: #d88;
+}
 #page2 {
 	display: none;
 }
