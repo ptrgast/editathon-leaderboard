@@ -30,10 +30,12 @@ function ModuleDetails() {
 	this._updateUsersView=function() {
 		var users=editathon.getUsers();
 		//all
-		users=users.sort(this._sortByArticles);	
+		users=users.sort(this._sortByArticles);
 		var allUsers="";
 		for(var i=0;i<users.length;i++) {
-			allUsers+="<a>"+(i+1)+". "+users[i].username+"</a> ";
+			allUsers+="<a>"+(i+1)+". ";
+			allUsers+=users[i].username+" <span class='edits-counter"+(users[i].articles.length>0?" has-edits":"")+"'>"+users[i].articles.length+"</span>";
+			allUsers+="</a> ";
 		}
 		this._usersContent.innerHTML=allUsers;
 	}
