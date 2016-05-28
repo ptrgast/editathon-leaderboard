@@ -2,6 +2,8 @@ ModuleDetails.prototype=new eldb.Module();
 ModuleDetails.prototype.constructor=ModuleDetails;
 function ModuleDetails() {
 
+	var thisobj=this;
+
 	//articles
 	this._articlesContainer=document.createElement("div");
 	this._articlesContainer.className="articles";
@@ -31,13 +33,16 @@ function ModuleDetails() {
 		var users=editathon.getUsers();
 		//all
 		users=users.sort(this._sortByArticles);
-		var allUsers="";
+		this._usersContent.innerHTML="";
 		for(var i=0;i<users.length;i++) {
-			allUsers+="<a>"+(i+1)+". ";
-			allUsers+=users[i].username+" <span class='edits-counter"+(users[i].articles.length>0?" has-edits":"")+"'>"+users[i].articles.length+"</span>";
-			allUsers+="</a> ";
+			var userElem=document.createElement("a");
+			userElem.innerHTML=(i+1)+". "+users[i].username+
+			" <span class='edits-counter"+(users[i].articles.length>0?" has-edits":"")+"'>"+users[i].articles.length+"</span>";
+			userElem.userId=users[i].id;
+			userElem.onmousedown=this._highlightArticles;
+			userElem.onmouseup=this._removeHighlighting;
+			this._usersContent.appendChild(userElem);
 		}
-		this._usersContent.innerHTML=allUsers;
 	}
 
 	this._sortByArticles=function(a, b) {
@@ -53,10 +58,31 @@ function ModuleDetails() {
 		for(var i=0;i<users.length;i++) {
 			var currentUser=users[i];
 			for(var j=0;j<currentUser.articles.length;j++) {
-				articleLinks+="<a href='"+currentUser.articles[j].link+"' target='_blank'>"+currentUser.articles[j].title+"</a> ";
+				articleLinks+="<a class='owner-"+currentUser.id+"' href='"+currentUser.articles[j].link+"' target='_blank'>"+currentUser.articles[j].title+"</a> ";
 			}
 		}
 		this._articlesContent.innerHTML=articleLinks;
 		this._updateUsersView();
 	}
+
+	this._highlightArticles=function(event) {
+		var articleElems=thisobj._articlesContent.getElementsByTagName("a");
+		for(var i=0;i<articleElems.length;i++) {
+			if(articleElems[i].className.startsWith("owner-"+this.userId)) {
+				articleElems[i].className="owner-"+this.userId+" highlight";
+			} else if(articleElems[i].className.endsWith("highlight")) {
+				articleElems[i].className=articleElems[i].className.substring(0,articleElems[i].className.length-"highlight".length);
+			}
+		}
+	}
+
+	this._removeHighlighting=function(event) {
+		var articleElems=thisobj._articlesContent.getElementsByTagName("a");
+		for(var i=0;i<articleElems.length;i++) {
+			if(articleElems[i].className.endsWith("highlight")) {
+				articleElems[i].className=articleElems[i].className.substring(0,articleElems[i].className.length-"highlight".length);
+			}
+		}
+	}
+
 }
