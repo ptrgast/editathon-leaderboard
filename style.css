@@ -79,8 +79,15 @@ body {padding:5%}
 	-moz-column-count: 4; /* FF */
 	column-count: 4;
 }
+.articles a {
+	color: #1515BA;
+}
+.articles a.highlight {
+	background-color: #ccc;
+}
 .users a {
 	padding: 0.3em;
+	cursor: pointer;
 }
 .users a .edits-counter {
 	position: relative;
