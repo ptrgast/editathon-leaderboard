@@ -8,7 +8,7 @@ if(!paramExists("user")) {respond("missing parameter!");}
 $username=$_REQUEST["user"];
 
 //create the request url
-$apiUrl="http://$language.wikipedia.org/w/api.php?action=feedcontributions&format=xml&feedformat=rss&user=$username";
+$apiUrl="http://$language.wikipedia.org/w/api.php?action=feedcontributions&namespace=0&format=xml&feedformat=rss&user=$username";
 
 //fetch the data
 $apiResponse=file_get_contents($apiUrl);
